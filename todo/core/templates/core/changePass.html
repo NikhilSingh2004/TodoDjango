@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
+{% block SignLog %}
+
+{% endblock %}
+
 {% block content %}
     <div class="container mt-5 text-center">
     
-        <form method="post" action="{% url 'ChangePassword' %}" novalidate>
+        <form method="post" action="{% url 'ChangePass' %}" novalidate>
             {% csrf_token %}
             <h1 class="display-5 fw-bold">Change Your Password</h1>
             

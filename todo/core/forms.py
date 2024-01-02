@@ -15,4 +15,13 @@ class AddTodoForm(forms.ModelForm):
         model = ToDo
 
         fields = ['Date', 'Discreption']
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # If 'date_field' is not in the submitted data, set a default value
+        if 'Date' not in self.cleaned_data:
+            cleaned_data['Date'] = None  # Set your default value here
+
+        return cleaned_data
         

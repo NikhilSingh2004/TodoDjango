@@ -1,7 +1,25 @@
 {% extends "base.html" %}
 
+{% block SignLog %}
+
+{% endblock %}
+
 {% block content %}
 
+<div class="alert alert-success">
+    <h1>Add New ToDo</h1>
+</div>
 
+<div class="container">
+    <form action="{% url 'Add' %}" method="post">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+            <h3 class="display-6 fw-bold">{{ field.label_tag }}</h3> <br>
+                {{field}}
+                <br><br>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Add ToDo</button>
+    </form>
+</div>
 
 {% endblock %}

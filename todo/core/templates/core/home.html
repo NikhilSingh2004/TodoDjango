@@ -11,7 +11,7 @@
 
 <div class="text-center container mt-5">
     <div class="alert alert-success">
-        <h1>To Do Using Django {{needLog}}</h1>
+        <h1>To Do Using Django</h1>
     </div>
 
     {% if messsages %}
@@ -80,24 +80,60 @@
             {% endfor %}
         </tbody>
     </table>
-    {% if needLog %}
-    <ul style="list-style-type: none !important;">
-        <li class="nav-item">
-            <form method='post'>
-                {% csrf_token %}
-                <a class="btn btn-outline-danger mx-2" href="{% url 'LogOut' %}">Log Out</a>
-            </form>
-        </li>
-    </ul>
+
+    <!-- Pagination -->
+
+    <div class="text-center">
+        <div class="pagination">
+            <span class="step-links">
+                {% if todo.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ todo.previous_page_number }}">previous</a>
+                {% endif %}
+    
+                <span class="current">
+                    Page {{ todo.number }} of {{ todo.paginator.num_pages }}.
+                </span>
+    
+                {% if todo.has_next %}
+                    <a href="?page={{ todo.next_page_number }}">next</a>
+                    <a href="?page={{ todo.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <!-- Pagination Ends -->
+
+    {% if not needLog %}
+    <div class="container my-3">
+        <a class="btn btn-success d-block text-center" href="{% url 'Add' %}">
+            <h3>Add ToDo</h3>
+        </a>
+    </div>
+    <div class="container my-3">
+        <a class="btn btn-danger d-block text-center" href="{% url 'LogOut' %}">
+            <h3>Log Out</h3>
+        </a>
+    </div>
+    <div class="container my-3">
+        <a class="btn btn-warning d-block text-center" href="{% url 'ChangePass' %}">
+            <h3>Change Password</h3>
+        </a>
+    </div>
     {% else %}
-    <ul style="list-style-type: none !important;">
-        <li class="nav-item">
-            <form method='post'>
-                {% csrf_token %}
-                <a class="btn btn-outline-success mx-2" href="{% url 'LogIn' %}">LogIn</a>
-            </form>
-        </li>
-    </ul>
+    <!-- Make the SIGNUP and LOGIN both in a row -->
+
+    <div class="container my-3">
+        <a class="btn btn-success d-block text-center" href="{% url 'LogIn' %}">
+            <h3>Log In</h3>
+        </a>
+    </div>
+    <div class="container my-3">
+        <a class="btn btn-info d-block text-center" href="{% url 'SignUp' %}">
+            <h3>Sign Up</h3>
+        </a>
+    </div>
     {% endif %}
 </div>
 
