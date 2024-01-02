@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5 text-center">
+    
+        <form method="post" action="{% url 'ChangePassword' %}" novalidate>
+            {% csrf_token %}
+            <h1 class="display-5 fw-bold">Change Your Password</h1>
+            
+            {% if form.non_field_errors %}
+
+                {% for error in form.non_field_errors %}
+
+                    <p class="error"> {{error}} </p>
+
+                {% endfor %}
+
+            {% endif %}
+
+            {% if form %}
+                {% for field in form %}
+                    <div class="row mb-3">
+                        <div class="col-sm-12 mb-2">
+                            <h3 for="{{ field.id_for_label }}" class="col-form-label">{{ field.label_tag }}</h3>
+                        </div>
+                        <div class="col-sm-12">
+                            {{ field }}
+                            <span class="Errors">{{ field.errors | striptags }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <button type="submit" class="btn btn-success">Sing Up</button>
+
+        </form>
+
+        <div class="container">
+            <h3 class="fw-bold">Alreday a user? <a href="{% url 'LogIn' %}">LogIn</a></h3>
+        </div>
+
+    </div>
+
+{% endblock %}

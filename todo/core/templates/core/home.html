@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% if needLog %}
+
+{% block SignLog %}{% endblock %}
+
+{% endif %}
+
+
+{% block content %}
+
+<div class="text-center container mt-5">
+    <div class="alert alert-success">
+        <h1>To Do Using Django {{needLog}}</h1>
+    </div>
+
+    {% if messsages %}
+    <div {% if messsages.tags %} class="alert alert-{{messsages.tags}}" {% endif %}>
+        <h1>{{messsages}}</h1>
+    </div>
+    {% endif %}
+
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>
+                    Sr No.
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Discreption
+                </th>
+                <th>
+                    Operations
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for td in todo %}
+            <tr>
+                <td>
+                    {{td.id}}
+                </td>
+                <td>
+                    {{td.Date}}
+                </td>
+                <td>
+                    {{td.Discreption}}
+                </td>
+                <td>
+                    {% if opreations %}
+                    <nav id="myNavbar" class="navbar navbar-expand-lg fw-bold text-center">
+                        <div class="container">
+                        </div>
+                        <div class="container-fluid mx-auto">
+                            <ul class="navbar-nav ml-auto d-flex justify-content-center">
+                                <li class="nav-item">
+                                    <form method='post'>
+                                        {% csrf_token %}
+                                        <a class="btn btn-outline-warning mx-2" href="{% url 'SignUp' %}">Edid</a>
+                                    </form>
+                                </li>
+                                <li class="nav-item">
+                                    <form method='post'>
+                                        {% csrf_token %}
+                                        <a class="btn btn-outline-danger mx-2" href="{% url 'LogIn' %}">Delete</a>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="container">
+                        </div>
+                    </nav>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if needLog %}
+    <ul style="list-style-type: none !important;">
+        <li class="nav-item">
+            <form method='post'>
+                {% csrf_token %}
+                <a class="btn btn-outline-danger mx-2" href="{% url 'LogOut' %}">Log Out</a>
+            </form>
+        </li>
+    </ul>
+    {% else %}
+    <ul style="list-style-type: none !important;">
+        <li class="nav-item">
+            <form method='post'>
+                {% csrf_token %}
+                <a class="btn btn-outline-success mx-2" href="{% url 'LogIn' %}">LogIn</a>
+            </form>
+        </li>
+    </ul>
+    {% endif %}
+</div>
+
+{% endblock content %}
