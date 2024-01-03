@@ -71,8 +71,11 @@ def LogIn(request):
 # Function to Log Out the User
 
 def LogOut(request):
-    logout(request)
-    return HttpResponseRedirect('/')
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/login/')
 
 # Function to Let User Change the Password
 
@@ -118,9 +121,28 @@ def AddToDo(request):
 # Functon to Edit the Todo
 
 def EditToDo(request):
-    pass
+    if request.user.is_authenticated:
+        fm = AddTodoForm()
+        if request.method == "POST":
+            try:
+                # Implement the ID to update the data!
+                fm = AddTodoForm(request.POST)
+                if fm.is_valid():
+                    fm.save()
+                    messages.success(request, "Form Updated Successfuly!")
+                    return HttpResponseRedirect('/')
+                else:
+                    messages.error(request, "Something Went Wrong!")
+                    return render(request, 'core/editTodo.html', {'form' : fm})
+            except Exception as e:
+                print(e.__str__())
+                return render(request, 'core/editTodo.html', {'form' : fm})
+        else:
+            return render(request, 'core/editTodo.html', {})
+    else:
+        return HttpResponseRedirect('/login/')
 
 # Function to Delete the ToDo 
 
-def DeleteToDp(request):
+def DeleteToDo(request):
     pass

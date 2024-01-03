@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 
+{% block SignLog %}
+
+{% endblock %}
+
 {% block content %}
 
+<div class="container text-center alert alert-success my-5">
+    <h1 class="display-6 fw-bold">This is Edit Todo Page!</h1>
+</div>
 
+<div class="container">
+
+    <form action="{% url 'Edit' %}" method="post">
+        {% for fm in form %}
+            
+        {% endfor %}
+    </form>
+    
+</div>
 
 {% endblock %}

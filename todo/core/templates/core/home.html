@@ -60,13 +60,13 @@
                                 <li class="nav-item">
                                     <form method='post'>
                                         {% csrf_token %}
-                                        <a class="btn btn-outline-warning mx-2" href="{% url 'SignUp' %}">Edid</a>
+                                        <a class="btn btn-outline-warning mx-2" href="{% url 'Edit' %}">Edid</a>
                                     </form>
                                 </li>
                                 <li class="nav-item">
                                     <form method='post'>
                                         {% csrf_token %}
-                                        <a class="btn btn-outline-danger mx-2" href="{% url 'LogIn' %}">Delete</a>
+                                        <a class="btn btn-outline-danger mx-2" href="{% url 'Delete' %}">Delete</a>
                                     </form>
                                 </li>
                             </ul>
