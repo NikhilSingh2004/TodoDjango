@@ -120,25 +120,35 @@ def AddToDo(request):
     
 # Functon to Edit the Todo
 
-def EditToDo(request):
+def EditToDo(request, id):
     if request.user.is_authenticated:
+        todo = ToDo.objects.filter(id=id)
         fm = AddTodoForm()
         if request.method == "POST":
             try:
-                # Implement the ID to update the data!
+                # Initialize the Todo with the previous data!
                 fm = AddTodoForm(request.POST)
                 if fm.is_valid():
-                    fm.save()
+                    date = (fm.cleaned_data['Date'])
+                    disc = (fm.cleaned_data['Discreption'])
+                    
+                    todo = ToDo.objects.filter(id=id)[0]
+
+                    todo.Date = date
+                    todo.Discreption = disc
+
+                    todo.save()
+
                     messages.success(request, "Form Updated Successfuly!")
                     return HttpResponseRedirect('/')
                 else:
                     messages.error(request, "Something Went Wrong!")
-                    return render(request, 'core/editTodo.html', {'form' : fm})
+                    return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
             except Exception as e:
                 print(e.__str__())
-                return render(request, 'core/editTodo.html', {'form' : fm})
+                return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
         else:
-            return render(request, 'core/editTodo.html', {})
+            return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
     else:
         return HttpResponseRedirect('/login/')
 

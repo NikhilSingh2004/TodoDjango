@@ -12,10 +12,13 @@
 
 <div class="container">
 
-    <form action="{% url 'Edit' %}" method="post">
-        {% for fm in form %}
-            
-        {% endfor %}
+    <form action="{% url 'Edit' id %}" method="post">
+        {% csrf_token %}
+        {% if form %}
+            {{form}}
+        {% endif %}
+
+        <button class="btn btn-success" type="submit">Save</button>
     </form>
     
 </div>

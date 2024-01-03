@@ -8,6 +8,6 @@ urlpatterns = [
     path('logout/', views.LogOut, name='LogOut'),
     path('changePass/', views.ChangePassword, name='ChangePass'),
     path('addTodo/', views.AddToDo, name='Add'),
-    path('editTodo/', views.EditToDo, name='Edit'),
+    path('editTodo/<int:id>', views.EditToDo, name='Edit'),
     path('deleteTodo/', views.DeleteToDo, name='Delete'),
 ]
