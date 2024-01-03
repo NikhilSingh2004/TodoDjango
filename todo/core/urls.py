@@ -9,5 +9,5 @@ urlpatterns = [
     path('changePass/', views.ChangePassword, name='ChangePass'),
     path('addTodo/', views.AddToDo, name='Add'),
     path('editTodo/<int:id>', views.EditToDo, name='Edit'),
-    path('deleteTodo/', views.DeleteToDo, name='Delete'),
+    path('deleteTodo/<int:id>', views.DeleteToDo, name='Delete'),
 ]

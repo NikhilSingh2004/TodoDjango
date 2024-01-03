@@ -15,7 +15,9 @@
     <form action="{% url 'Edit' id %}" method="post">
         {% csrf_token %}
         {% if form %}
-            {{form}}
+            <h3 class="display-6 fw-bold">{{ form.label_tag }}</h3> <br>
+                {{form}}
+                <br><br>
         {% endif %}
 
         <button class="btn btn-success" type="submit">Save</button>

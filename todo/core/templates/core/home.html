@@ -66,7 +66,7 @@
                                 <li class="nav-item">
                                     <form method='post'>
                                         {% csrf_token %}
-                                        <a class="btn btn-outline-danger mx-2" href="{% url 'Delete' %}">Delete</a>
+                                        <a class="btn btn-outline-danger mx-2" href="{% url 'Delete' td.id %}">Delete</a>
                                     </form>
                                 </li>
                             </ul>

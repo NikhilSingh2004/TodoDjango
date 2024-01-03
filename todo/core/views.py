@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from .forms import SignUpForm, AddTodoForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
@@ -117,42 +118,49 @@ def AddToDo(request):
             return render(request, 'core/addTodo.html', {'form' : fm})
     else:   
         return HttpResponseRedirect('/')
-    
-# Functon to Edit the Todo
+
+# Function to Edit the ToDo    
 
 def EditToDo(request, id):
     if request.user.is_authenticated:
-        todo = ToDo.objects.filter(id=id)
-        fm = AddTodoForm()
+        todo = get_object_or_404(ToDo, id=id)
         if request.method == "POST":
             try:
-                # Initialize the Todo with the previous data!
-                fm = AddTodoForm(request.POST)
+                # Initialize the form with the Todo instance
+                fm = AddTodoForm(request.POST, instance=todo)
                 if fm.is_valid():
-                    date = (fm.cleaned_data['Date'])
-                    disc = (fm.cleaned_data['Discreption'])
-                    
-                    todo = ToDo.objects.filter(id=id)[0]
-
-                    todo.Date = date
-                    todo.Discreption = disc
-
-                    todo.save()
-
-                    messages.success(request, "Form Updated Successfuly!")
+                    fm.save()
+                    messages.success(request, "Form Updated Successfully!")
                     return HttpResponseRedirect('/')
                 else:
                     messages.error(request, "Something Went Wrong!")
-                    return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
+                    return render(request, 'core/editTodo.html', {'form': fm, 'id': id})
             except Exception as e:
                 print(e.__str__())
-                return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
+                return render(request, 'core/editTodo.html', {'form': fm, 'id': id})
         else:
-            return render(request, 'core/editTodo.html', {'form' : fm, 'id' : id})
+            # Initialize the form with the Todo instance for GET requests
+            fm = AddTodoForm(instance=todo)
+            return render(request, 'core/editTodo.html', {'form': fm, 'id': id})
     else:
         return HttpResponseRedirect('/login/')
 
+
 # Function to Delete the ToDo 
 
-def DeleteToDo(request):
-    pass
+def DeleteToDo(request, id):
+    if request.user.is_authenticated:
+        try:
+            todo = ToDo(id=id)
+            if todo:
+                todo.delete()
+                messages.success(request, "Todo Deleted Successfuly")
+                return HttpResponseRedirect('/')
+            else:
+                messages.error(request, "Todo Not Found!")
+                return HttpResponseRedirect('/')
+        except Exception as e:
+            print(e.__str__())
+            return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect("/login/")
