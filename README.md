@@ -12,6 +12,6 @@ The project consist of application level templates, the project is also using dj
 There is only one custom model that is the Todo Model itself, Which consist of 2 fileds 
 
 -- Date 
--- Discreption 
+-- Description  
 
 User who have not loged in can only view the todo's, for Add, Edit & Delete the user have to log in or sign up.
